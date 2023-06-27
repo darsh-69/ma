@@ -1,0 +1,42 @@
+Program 2
+Develop, Implement and Execute a program using YACC tool 
+to recognize all strings ending with b preceded by na's using the grammar anb 
+(note: input n value)
+
+
+/* LEX PROGRAM */
+
+
+%{
+#include "y.tab.h"
+%}
+%%
+a 		{return A;}
+b 		{return B;}
+[\n]	return '\n';
+%%
+
+
+
+/* YACC PROGRAM */
+
+%{
+#include<stdio.h>
+#include<stdlib.h>
+%}
+%token A B
+%%
+input:	s'\n' {printf("Successful Grammar\n");exit(0);}
+		s: A s1 B| B
+		s1: ; | A s1
+%%
+main()
+{
+	printf("\nEnter A String\n");
+	yyparse();
+}
+int yyerror()
+{
+	printf("\nError \n");
+	exit(0);
+}

@@ -1,0 +1,49 @@
+Program 6 A
+
+Write a LEX program to eliminate comment lines in a C program and copy the resulting program into a separate file.
+
+
+
+%{
+#include<stdio.h>
+int sl=0;
+int ml=0;
+%}
+%%
+"/*"[a-zA-Z0-9' '\t\n]+"*/"	ml++;
+"//".*	sl++;
+%%
+
+main()
+{
+	yyin=fopen("f1.c","r");
+	yyout=fopen("f2.c","w");
+	yylex();
+	fclose(yyin);
+	fclose(yyout);
+	printf("\n Number of single line comments are = %d\n",sl); printf("\nNumber of multiline comments are =%d\n",ml);
+}
+
+
+
+
+
+EXECUTION PROCEDURE
+
+gedit pgmname.l
+cat f1.c
+
+/* Type following program in f1.c file */
+
+#include<stdio.h>
+int main()
+{
+//This is a comment
+printf("Hello");
+/* This is a multi line comment */
+}
+
+
+lex pgmname.l
+gcc lex.yy.c y.tab.c -ll
+./a.out
